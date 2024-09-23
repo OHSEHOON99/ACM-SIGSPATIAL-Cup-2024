@@ -1,6 +1,6 @@
-**README**
+*ACM-SIGSPATIAL-Cup-2024*
 
----
+SCSI Lab, Yonsei University
 
 **1. Description**
 
@@ -132,6 +132,17 @@ Based on the classification of the above steps, the cases operate with different
 
 **Case 7: Highway DCFC**
 
-*"Additional explanation by Jaeyoung"*
-
+- **Step1. Traffic Flow Calculation**: Estimating traffic flow based on the OD matrix.
+- **Step2. Intersection Analysis**: Identifying potential locations for charging stations based on road intersections.
+- **Step3. Supply Allocation**: Allocating the appropriate number of chargers at each candidate location.
 ---
+
+## 2. Run This Code!!
+
+After processing, the output files are placed in the 'Data' directory.
+
+To run the code, go to `Main.py`, update the file paths accordingly, and execute the script.
+
+**<span style="color:red">Note</span>**: Since **<span style="color:red">Atlanta</span>** has large data files, the computation time will be significantly longer. To quickly cross-validate the results we submitted, you can use the **Suburban** data instead.
+
+Best Regards,<br><br>Team SCSI
