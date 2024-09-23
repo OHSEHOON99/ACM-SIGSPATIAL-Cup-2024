@@ -1,6 +1,6 @@
-*ACM-SIGSPATIAL-Cup-2024*
+# ACM-SIGSPATIAL-Cup-2024
 
-SCSI Lab, Yonsei University
+## SCSI Lab, Yonsei University
 
 **1. Description**
 
