@@ -6,7 +6,7 @@
 
 Our research framework for determining the optimal locations of Electric Vehicle Charging Stations (EVCS) is as follows:
 
-![Project Framework](./Figure/project_framework.jpg)
+![Project Framework](./figure/project_framework.jpg)
 
 **Demand**: We considered potential users who would utilize EVCS. The data used include Origin-Destination (OD) data, OpenStreetMap road network data, and provided Point of Interest (POI) data. These datasets were preprocessed to create a demand map.
 
