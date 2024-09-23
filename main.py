@@ -49,10 +49,10 @@ def main():
     # Set up logging
     setup_logging()
 
-    gpkg_file = "/home/sehoon/Desktop/Sehoon/github/data/0916/suburban_greedy.gpkg"
-    tif_file = "/home/sehoon/Desktop/Sehoon/github/data/D_POI_500_Scaled.tif"
-    poi_file = "/home/sehoon/Desktop/Sehoon/github/data/osm_poi_filtered_candidate/osm_poi_filtered_candidate_3857.gpkg"
-    output_path = "/home/sehoon/Desktop/Sehoon/github/output/0916"
+    gpkg_file = "/home/sehoon/Desktop/ACM-SIGSPATIAL-Cup-2024/data/suburban_trip_greedy.gpkg"
+    tif_file = "/home/sehoon/Desktop/ACM-SIGSPATIAL-Cup-2024/data/demand_map_500.tif"
+    poi_file = "/home/sehoon/Desktop/ACM-SIGSPATIAL-Cup-2024/data/Suburban_POI_Candidate.gpkg"
+    output_path = "./results/"
 
     # Read input files
     polygons = gpd.read_file(gpkg_file)
