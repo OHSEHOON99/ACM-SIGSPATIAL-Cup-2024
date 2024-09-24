@@ -1,6 +1,42 @@
 # ACM-SIGSPATIAL-Cup-2024
 
-## SCSI Lab, Yonsei University
+### SCSI Lab, Yonsei University
+
+## Virtual Environment Setup
+
+Before running the project, it is recommended to set up a Python virtual environment. Follow these steps to create and activate the virtual environment:
+
+### Step 1: Create a Virtual Environment
+
+Run the following command to create a virtual environment (named `venv`):
+
+```bash
+python -m venv venv
+```
+
+## Step 2: Activate the Virtual Environment
+
+Activate the virtual environment using the appropriate command for your operating system:
+
+- **For Windows**:
+
+    ```bash
+    venv\Scripts\activate
+    ```
+
+- **For macOS/Linux**:
+
+    ```bash
+    source venv/bin/activate
+    ```
+
+### Step 3: Install Required Packages
+
+Once the virtual environment is activated, install the required packages listed in the `requirements.txt` file:
+
+```bash
+pip install -r requirements.txt
+```
 
 **1. Description**
 
