@@ -6,8 +6,8 @@ import numpy as np
 import pandas as pd
 from joblib import Parallel, delayed
 
-from capacity_optimizer import CapacityOptimizer
-from process_polygon import process_polygon
+from .capacity_optimizer import CapacityOptimizer
+from .process_polygon import process_polygon
 
 
 def update_supply(poi_supply, selected_sites, supply_values):

@@ -1,0 +1,69 @@
+candidate:
+  atlanta:
+    - bank
+    - fast_food
+    - restaurant
+    - museum
+    - college
+    - hospital
+    - university
+    - town_hall
+    - stadium
+    - courthouse
+    - public_building
+    - hotel
+    - pharmacy
+    - supermarket
+    - department_store
+    - gift_shop
+    - car_rental
+    - zoo
+    - motel
+    - mall
+    - camp_site
+    - general
+
+  suburban:
+    - school
+    - library
+    - bank
+    - fast_food
+    - restaurant
+    - museum
+    - college
+    - hospital
+    - university
+    - town_hall
+    - stadium
+    - courthouse
+    - public_building
+    - hotel
+    - pharmacy
+    - supermarket
+    - department_store
+    - gift_shop
+    - car_rental
+    - zoo
+    - motel
+    - mall
+    - camp_site
+    - general
+
+
+initial:
+  atlanta:
+    - bank
+    - supermarket
+    - department_store
+    - hospital
+    - public_building
+    - mall
+    - town_hall
+
+  suburban:
+    - department_store
+    - town_hall
+    - hospital
+    - market_place
+    - mall
+    - public_building
