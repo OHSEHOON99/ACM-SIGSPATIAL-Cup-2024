@@ -2,73 +2,69 @@
 
 ### SCSI Lab, Yonsei University
 
-## Virtual Environment Setup
+This repository contains the code and research framework developed for the ACM SIGSPATIAL 2024 GIS Cup. The project focuses on optimizing the locations and capacities of Electric Vehicle Charging Stations (EVCS) in the state of Georgia, USA. The overall objective is to balance the accessibility of EVCS while ensuring that the distribution of charging stations meets future demand.
 
-Before running the project, it is recommended to set up a Python virtual environment. Follow these steps to create and activate the virtual environment:
+---
 
-### Step 1: Create a Virtual Environment
+## 0. Conda Environment Setup
 
-Run the following command to create a virtual environment (named `venv`):
+Before running the project, it is recommended to set up a Conda environment. Follow these steps to create and activate the Conda environment:
+
+### Step 1: Create a Conda Environment
+
+Run the following command to create a Conda environment (named `acm2024_env`):
 
 ```bash
-python -m venv venv
+conda create --name acm2024_env python=3.10
 ```
 
-## Step 2: Activate the Virtual Environment
+### Step 2: Activate the Conda Environment
 
-Activate the virtual environment using the appropriate command for your operating system:
+Activate the Conda environment using the following command:
 
-- **For Windows**:
-
-    ```bash
-    venv\Scripts\activate
-    ```
-
-- **For macOS/Linux**:
-
-    ```bash
-    source venv/bin/activate
-    ```
+```bash
+conda activate acm2024_env
+```
 
 ### Step 3: Install Required Packages
 
-Once the virtual environment is activated, install the required packages listed in the `requirements.txt` file:
+Once the Conda environment is activated, install the required packages listed in the `requirements.txt` file:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-**1. Description**
+## 1. Description
 
-Our research framework for determining the optimal locations of Electric Vehicle Charging Stations (EVCS) is as follows:
+Our research framework for determining the optimal locations of EVCS consists of several key steps:
 
 ![Project Framework](./figure/project_framework.jpg)
 
-**Demand**: We considered potential users who would utilize EVCS. The data used include Origin-Destination (OD) data, OpenStreetMap road network data, and provided Point of Interest (POI) data. These datasets were preprocessed to create a demand map.
+### Demand:
+We analyzed potential users who would utilize EVCS based on Origin-Destination (OD) data, OpenStreetMap road network data, and provided Point of Interest (POI) data. This data was preprocessed to create a **demand map** representing areas of high potential EVCS usage.
 
-**Capacity**: Considering the future penetration rate of EVCS in Georgia, we calculated the potential capacity of EVCS for the near future, specifically the year 2025. The data used include car registration data from the H-T Index and OD data, which were utilized to create a capacity map.
+### Capacity:
+Considering the expected penetration of EVCS in Georgia by 2025, we calculated the potential **capacity map**. This was derived using car registration data, the H-T Index, and OD data to estimate the necessary EVCS capacity to meet future demand.
 
-**EVCS Location Capacity Optimization**: This is the main optimization algorithm used in our research. We calculated accessibility by considering the bidirectional impact based on the created demand and capacity maps. The method employed is the Two-Step Floating Catchment Area (2SFCA) approach as a basic framework. Furthermore, we incorporated fairness by training the model to minimize the standard deviation of the accessibility index.
+### EVCS Location and Capacity Optimization:
+Our core optimization algorithm combines **Greedy algorithms** and **Quadratic Programming (QP)**. Using the **Two-Step Floating Catchment Area (2SFCA)** method as a framework, we calculated the accessibility at demand points and trained our model to minimize the standard deviation of the accessibility index. This ensures that the placement of EVCS locations is fair and efficient.
 
-**Post Processing**: We processed disaster-related information from power outage data and Justice40 Climate Data. EVCS locations in high-risk areas were removed from the final results.
+### Post-Processing:
+To ensure resilience, we processed disaster-related data (e.g., power outage data, Justice40 Climate Data). EVCS locations identified in high-risk areas were excluded from the final results.
 
-**Categorization**: This is the most crucial part of our project. Georgia consists of various urban and non-urban areas. Even within urban regions, suburbs are distributed throughout the state with Atlanta as the central city, and rural areas exist in between. To reflect these influences, we divided Georgia into three main categories and conducted our research accordingly.
-
-**Spatial Categories**:
-
+### Spatial Categories:
+Georgia was divided into four spatial categories to reflect urban and non-urban influences:
 - **Category 1**: Atlanta
 - **Category 2**: Suburban (Urban areas excluding Atlanta)
 - **Category 3**: Rural
 - **Category 4**: Highway
 
-Additionally, the charger type of EVCS is a significant factor in charging optimization. In particular, DC Fast Chargers (DCFC) tend to be installed mainly along major highways. Since it is common in previous studies to perform optimization after classifying charger types, we also conducted optimization after categorizing the charger types.
+### Charger Types:
+EVCS charger types were classified as follows:
+- **Category 1**: DC Fast Chargers (DCFC)
+- **Category 2**: Level 2 Chargers (Fast Chargers)
 
-**Charger Types**:
-
-- **Category 1**: DCFC (Ultra-fast Chargers)
-- **Category 2**: Level 2 (Fast Chargers)
-
-Through these classifications, we conducted optimization for a total of seven cases:
+Based on these classifications, we optimized the EVCS network for a total of **seven scenarios**:
 
 1. **Case 1**: Atlanta Level 2
 2. **Case 2**: Atlanta DCFC
@@ -78,107 +74,65 @@ Through these classifications, we conducted optimization for a total of seven ca
 6. **Case 6**: Rural DCFC
 7. **Case 7**: Highway DCFC
 
-The results are very reasonable.
+The optimization process was consistent across all cases, producing reasonable and effective results.
 
 ---
 
-For Cases 1 to 6, we worked with the same demand map and capacity.
+## 2. Run This Code
 
-The process of estimating the demand and capacity maps is saved as a Jupyter Notebook in the following folder: "Directory within GitHub"
+Each scenario can be executed and evaluated using corresponding Jupyter Notebooks provided in the repository. The notebooks follow the naming convention `{region}_{charger_type}.ipynb`, and each one is tailored to the specific spatial category and charger type. This allows for flexible testing and validation of different cases.
 
----
+For example:
+- **Case 1**: Execute `atlanta_lv2.ipynb` to optimize the EVCS in Atlanta with Level 2 chargers.
+- **Case 3**: Execute `suburban_dcfc.ipynb` to optimize the EVCS in suburban areas with DC Fast Chargers.
 
-**Step 1: POI Candidate Selection (Candidates for EVCS)**
-
-First, the capacities for Atlanta, Suburban, and Rural areas were estimated, and the demand map was also created. To determine the appropriate locations for EVCS, we conducted POI filtering. We visually verified the provided POI and the POI extracted from OSM using Geographic Information System (GIS) and confirmed that the reliability level of the provided POI was low. Therefore, we performed POI filtering based on OSM_POI. Through this filtering, we identified appropriate candidates for EVCS installation (e.g., supermarkets, city halls, hotels) and classified them by category (spatial unit, charger type).
-
----
-
-**Step 2: Initial POI Selection**
-
-Next, we selected the initial points that must be installed from the filtered POI candidates. The optimization process was conducted based on these initial points.
-
-- **For Level 2 Type**: We selected initial POIs that are high-probability candidates for installation through more refined additional filtering among the POI candidates.
-- **For DCFC**: We utilized road network data to extract highways and selected initial POIs using an algorithm that leverages geospatial information (e.g., intersections) of motorways and trunkways among the highways.
+These notebooks contain the full pipeline, from data preprocessing and POI selection to the final EVCS optimization.
 
 ---
 
-**Step 2.a: Select EVCS Location**
+## 3. Detailed Steps
 
-In certain cases, the following situation occurs: If the capacity allocated to a county is generally low and only one or two EVCS need to be installed, the initial POI becomes the EVCS installation location. In this case, we used an algorithm that cross-examines the filtered POIs and the demand map to install the EVCS at the location with the highest score. We applied the same algorithm for both Level 2 and DCFC.
+### Step 1: POI Candidate Selection
+The first step involves filtering POIs for Atlanta, Suburban, and Rural areas. Using Geographic Information System (GIS) tools, we analyzed provided POIs and extracted new candidates from OpenStreetMap (OSM). After this filtering, we identified potential sites for EVCS installation based on categories like supermarkets, city halls, and hotels.
 
----
+### Step 2: Initial POI Selection
+From the filtered POIs, we selected initial points for installation:
+- **For Level 2 Chargers**: POIs were further refined to select high-probability installation sites.
+- **For DCFC**: Initial POIs were selected using road network data, focusing on motorways and intersections.
 
-**Step 3: EVCS Optimization**
+### Step 2.a: EVCS Location Selection
+In areas where the demand is low and only one or two EVCS are needed, the initial POI often becomes the final EVCS location. In these cases, the location is selected by cross-referencing the POIs with the demand map to find the optimal site. This approach is consistent for both Level 2 and DCFC chargers.
 
-*"Detailed explanation by Sehun"*
+### Step 3: EVCS Optimization
+This step focuses on optimizing the EVCS location and capacity using a combination of Greedy algorithms and Quadratic Programming (QP):
+1. **Location Optimization**: The Greedy algorithm selects the optimal EVCS locations by minimizing the standard deviation of accessibility across demand points.
+2. **Capacity Optimization**: Quadratic Programming (QP) is used to allocate the optimal number of charging ports to each EVCS location. The goal is to balance supply and demand while minimizing the standard deviation of the accessibility index at the demand points. This ensures that the distribution of charging capacity is fair and efficient.
 
----
+### Constraints:
+- **Minimum Ports**: All EVCS locations are assigned at least 1 port to ensure functionality.
+- **Urban Limits**: In urban areas, the number of ports is constrained between 2 and 25 to prevent excessive allocation in high-demand locations, based on real-world EVCS data.
 
-Based on the classification of the above steps, the cases operate with different steps to derive the optimal conclusion for each.
-
----
-
-**Case 1: Atlanta Level 2**
-
-- **Step 1 - POI Candidate Selection**: Since there is a sufficient number of POIs with high reliability, we selected POI candidates through POI filtering suitable for the area.
-- **Step 2 - Select Initial Point**: Similarly, due to the sufficient number of reliable POIs, we selected initial POIs through secondary filtering.
-- **Step 3 - EVCS Optimization**
-
----
-
-**Case 2: Atlanta DCFC**
-
-- **Step 1 - POI Candidate Selection**: Since there is a sufficient number of POIs with high reliability, we selected POI candidates through POI filtering suitable for the area.
-- **Step 2 - Select Initial Point**: Although there are enough POIs, considering the high influence of highways on DCFC, we selected initial POIs by considering the impact of highway roads.
-- **Step 3 - EVCS Optimization**
+### Capture Range and Bandwidth:
+- **Urban Areas**: Capture range of 3000 meters and bandwidth of 1000 meters, reflecting shorter travel distances.
+- **Suburban/Rural Areas**: Capture range of 4000 meters and bandwidth of 1500 meters, as residents in these areas are more willing to travel further distances for services, such as healthcare or charging stations.
 
 ---
 
-**Case 3: Suburban Level 2**
+## 4. Code Execution
 
-- **Step 1 - POI Candidate Selection**: Since there is a sufficient number of POIs with high reliability, we selected POI candidates through POI filtering suitable for the area.
-- **Step 2 & Step 2.a - Select Initial Point & Select EVCS Location**:
-  - **a)** If the allocated capacity is sufficient, we used the same method as in Cases 1 and 2.
-  - **b)** When considering the allocated capacity, there are locations where only one or two EVCS need to be installed; in these cases, we decided by considering both POIs and demand simultaneously.
-- **Step 3 - EVCS Optimization**
+After processing, the output files (such as the optimized EVCS locations) will be saved in the specified output directory.
 
----
+To run the optimization for any scenario, simply open the corresponding Jupyter Notebook (`{region}_{charger_type}.ipynb`), update the paths as needed, and execute the cells.
 
-**Case 4: Suburban DCFC**
+For instance:
+- **Case 1**: Open and run `atlanta_lv2.ipynb` for Atlanta with Level 2 chargers.
+- **Case 3**: Open and run `suburban_dcfc.ipynb` for suburban DC Fast Chargers.
 
-- **Step 1 - POI Candidate Selection**: Since there is a sufficient number of POIs with high reliability, we selected POI candidates through POI filtering.
-- **Step 2.a - Select EVCS Location**: For locations where one or two EVCS need to be installed, we selected EVCS locations by considering the road network and demand map.
+Each notebook is configured for its respective scenario, so you can test different regions and charger types independently.
 
----
-
-**Case 5: Rural Level 2**
-
-- **Step 1 - POI Candidate Selection**: Since there is a sufficient number of POIs with high reliability, we selected POI candidates through POI filtering.
-- **Step 2.a - Select EVCS Location**: In locations where one or two EVCS need to be installed and the influence of the road network is minimal, we selected EVCS locations by considering only the demand map.
+**Note**: Processing larger datasets (e.g., Atlanta) may take significantly longer. For quicker validation, you may start with smaller regions such as suburban or rural areas.
 
 ---
 
-**Case 6: Rural DCFC**
-
-- **Step 1 - POI Candidate Selection**: Since there is a sufficient number of POIs with high reliability, we selected POI candidates through POI filtering.
-- **Step 2.a - Select EVCS Location**: In locations where one or two EVCS need to be installed and the influence of the road network is minimal, we selected EVCS locations by considering only the demand map.
-
----
-
-**Case 7: Highway DCFC**
-
-- **Step1. Traffic Flow Calculation**: Estimating traffic flow based on the OD matrix.
-- **Step2. Intersection Analysis**: Identifying potential locations for charging stations based on road intersections.
-- **Step3. Supply Allocation**: Allocating the appropriate number of chargers at each candidate location.
----
-
-## 2. Run This Code!!
-
-After processing, the output files are placed in the 'Data' directory.
-
-To run the code, go to `Main.py`, update the file paths accordingly, and execute the script.
-
-**<span style="color:red">Note</span>**: Since **<span style="color:red">Atlanta</span>** has large data files, the computation time will be significantly longer. To quickly cross-validate the results we submitted, you can use the **Suburban** data instead.
-
-Best Regards,<br><br>Team SCSI
+Best regards,  
+**Team SCSI**
