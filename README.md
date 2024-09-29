@@ -78,19 +78,7 @@ The optimization process was consistent across all cases, producing reasonable a
 
 ---
 
-## 2. Run This Code
-
-Each scenario can be executed and evaluated using corresponding Jupyter Notebooks provided in the repository. The notebooks follow the naming convention `{region}_{charger_type}.ipynb`, and each one is tailored to the specific spatial category and charger type. This allows for flexible testing and validation of different cases.
-
-For example:
-- **Case 1**: Execute `atlanta_lv2.ipynb` to optimize the EVCS in Atlanta with Level 2 chargers.
-- **Case 3**: Execute `suburban_dcfc.ipynb` to optimize the EVCS in suburban areas with DC Fast Chargers.
-
-These notebooks contain the full pipeline, from data preprocessing and POI selection to the final EVCS optimization.
-
----
-
-## 3. Detailed Steps
+## 2. Detailed Steps
 
 ### Step 1: POI Candidate Selection
 The first step involves filtering POIs for Atlanta, Suburban, and Rural areas. Using Geographic Information System (GIS) tools, we analyzed provided POIs and extracted new candidates from OpenStreetMap (OSM). After this filtering, we identified potential sites for EVCS installation based on categories like supermarkets, city halls, and hotels.
@@ -118,7 +106,7 @@ This step focuses on optimizing the EVCS location and capacity using a combinati
 
 ---
 
-## 4. Code Execution
+## 3. Code Execution
 
 After processing, the output files (such as the optimized EVCS locations) will be saved in the specified output directory.
 
