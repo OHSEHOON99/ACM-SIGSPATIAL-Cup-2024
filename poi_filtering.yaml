@@ -49,6 +49,48 @@ candidate:
     - camp_site
     - general
 
+  atlanta_dcfc:
+    - bank
+    - supermarket
+    - department_store
+    - hospital
+    - public_building
+    - mall
+    - town_hall
+
+  suburban_dcfc:
+    - school
+    - bank
+    - pharmacy
+    - supermarket
+    - post_office
+    - general_store
+
+  rural:
+    - supermarket
+    - school
+    - library
+    - bank
+    - fast_food
+    - restaurant
+    - museum
+    - college
+    - hospital
+    - university
+    - town_hall
+    - stadium
+    - courthouse
+    - public_building
+    - hotel
+    - pharmacy
+    - department_store
+    - gift_shop
+    - car_rental
+    - zoo
+    - motel
+    - mall
+    - camp_site
+    - general
 
 initial:
   atlanta:

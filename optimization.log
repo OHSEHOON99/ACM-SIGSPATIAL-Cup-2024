@@ -263,3 +263,158 @@ Initial Coverage      : 36.95%
 2024-09-28 22:07:42,732 - INFO - Selecting site 41/238 | Selected Site: 116 | A_hat: 0.01426 | Coverage:  36.95%
 2024-09-28 22:07:49,903 - INFO - Selecting site 42/238 | Selected Site: 106 | A_hat: 0.01366 | Coverage:  41.83%
 2024-09-28 22:07:57,968 - INFO - Selecting site 43/238 | Selected Site: 412 | A_hat: 0.01313 | Coverage:  44.67%
+2024-09-29 20:52:37,360 - INFO - GDAL signalled an error: err_no=4, msg='/home/sehoon/Desktop/ACM-SIGSPATIAL-Cup-2024/data/urban_trip_greedy.gpkg: No such file or directory'
+2024-09-29 20:53:16,978 - INFO - 
+==================================================
+*** Processed Polygon Information ***
+--------------------------------------------------
+Polygon ID            : Atlanta, GA Urban Area_6
+Total Supply          : 953.0
+A_bar Value           : 0.0074
+Selected Initial Sites: 40
+Initial Coverage      : 36.95%
+==================================================
+2024-09-29 20:53:24,940 - INFO - Selecting site 41/238 | Selected Site: 116 | A_hat: 0.01275 | Coverage:  36.95%
+2024-09-29 20:54:03,906 - INFO - 
+==================================================
+*** Processed Polygon Information ***
+--------------------------------------------------
+Polygon ID            : Atlanta, GA Urban Area_6
+Total Supply          : 176.0
+A_bar Value           : 0.0014
+Selected Initial Sites: 5
+Initial Coverage      : 15.42%
+==================================================
+2024-09-29 20:54:09,869 - INFO - Selecting site  6/35 | Selected Site: 132 | A_hat: 0.00400 | Coverage:  15.42%
+2024-09-29 20:54:14,816 - INFO - Selecting site  7/35 | Selected Site: 107 | A_hat: 0.00369 | Coverage:  16.47%
+2024-09-29 20:54:18,011 - INFO - Selecting site  8/35 | Selected Site:   5 | A_hat: 0.00344 | Coverage:  19.11%
+2024-09-29 20:54:21,789 - INFO - Selecting site  9/35 | Selected Site: 102 | A_hat: 0.00323 | Coverage:  22.32%
+2024-09-29 20:54:26,077 - INFO - Selecting site 10/35 | Selected Site: 139 | A_hat: 0.00307 | Coverage:  25.20%
+2024-09-29 20:54:30,941 - INFO - Selecting site 11/35 | Selected Site: 208 | A_hat: 0.00293 | Coverage:  27.44%
+2024-09-29 20:54:34,134 - INFO - Selecting site 12/35 | Selected Site: 171 | A_hat: 0.00281 | Coverage:  29.46%
+2024-09-29 20:54:37,867 - INFO - Selecting site 13/35 | Selected Site:  80 | A_hat: 0.00270 | Coverage:  31.18%
+2024-09-29 20:54:42,105 - INFO - Selecting site 14/35 | Selected Site: 187 | A_hat: 0.00260 | Coverage:  32.98%
+2024-09-29 20:54:46,875 - INFO - Selecting site 15/35 | Selected Site: 158 | A_hat: 0.00251 | Coverage:  34.76%
+2024-09-29 20:54:50,066 - INFO - Selecting site 16/35 | Selected Site:  76 | A_hat: 0.00243 | Coverage:  36.69%
+2024-09-29 20:54:53,732 - INFO - Selecting site 17/35 | Selected Site:  64 | A_hat: 0.00236 | Coverage:  38.71%
+2024-09-29 21:14:34,388 - INFO - 
+==================================================
+*** Processed Polygon Information ***
+--------------------------------------------------
+Polygon ID            : Albany, GA Urban Area
+Total Supply          : 11.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 20.29%
+==================================================
+2024-09-29 21:14:36,084 - INFO - Selecting site  2/ 2 | Selected Site:  16 | A_hat: 0.00105 | Coverage:  20.29%
+2024-09-29 21:14:36,124 - INFO - Optimization process for Albany, GA Urban Area complete
+2024-09-29 21:14:36,234 - INFO - 
+=============================================================
+*** Processed Polygon Information ***
+-------------------------------------------------------------
+Polygon ID            : Athens-Clarke County, GA Urban Area
+Total Supply          : 21.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 29.18%
+=============================================================
+2024-09-29 21:14:36,507 - INFO - Selecting site  2/ 5 | Selected Site: 162 | A_hat: 0.00100 | Coverage:  29.18%
+2024-09-29 21:14:36,794 - INFO - Selecting site  3/ 5 | Selected Site: 207 | A_hat: 0.00086 | Coverage:  37.92%
+2024-09-29 21:14:37,050 - INFO - Selecting site  4/ 5 | Selected Site:   1 | A_hat: 0.00076 | Coverage:  46.11%
+2024-09-29 21:14:37,343 - INFO - Selecting site  5/ 5 | Selected Site: 180 | A_hat: 0.00070 | Coverage:  54.03%
+2024-09-29 21:14:37,379 - INFO - Optimization process for Athens-Clarke County, GA Urban Area complete
+2024-09-29 21:14:37,523 - INFO - 
+====================================================================
+*** Processed Polygon Information ***
+--------------------------------------------------------------------
+Polygon ID            : Augusta-Richmond County, GA--SC Urban Area
+Total Supply          : 31.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 7.95%
+====================================================================
+2024-09-29 21:14:38,155 - INFO - Selecting site  2/ 7 | Selected Site: 120 | A_hat: 0.00183 | Coverage:   7.95%
+2024-09-29 21:14:38,863 - INFO - Selecting site  3/ 7 | Selected Site: 115 | A_hat: 0.00146 | Coverage:  17.07%
+2024-09-29 21:14:39,405 - INFO - Selecting site  4/ 7 | Selected Site: 136 | A_hat: 0.00127 | Coverage:  23.78%
+2024-09-29 21:14:40,057 - INFO - Selecting site  5/ 7 | Selected Site:  68 | A_hat: 0.00113 | Coverage:  30.71%
+2024-09-29 21:15:08,196 - INFO - 
+==================================================
+*** Processed Polygon Information ***
+--------------------------------------------------
+Polygon ID            : Albany, GA Urban Area
+Total Supply          : 11.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 25.39%
+==================================================
+2024-09-29 21:15:09,948 - INFO - Selecting site  2/ 2 | Selected Site:  16 | A_hat: 0.00083 | Coverage:  25.39%
+2024-09-29 21:15:09,987 - INFO - Optimization process for Albany, GA Urban Area complete
+2024-09-29 21:15:10,113 - INFO - 
+=============================================================
+*** Processed Polygon Information ***
+-------------------------------------------------------------
+Polygon ID            : Athens-Clarke County, GA Urban Area
+Total Supply          : 21.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 34.81%
+=============================================================
+2024-09-29 21:15:10,388 - INFO - Selecting site  2/ 5 | Selected Site: 177 | A_hat: 0.00080 | Coverage:  34.81%
+2024-09-29 21:15:10,687 - INFO - Selecting site  3/ 5 | Selected Site: 214 | A_hat: 0.00066 | Coverage:  44.50%
+2024-09-29 21:15:10,954 - INFO - Selecting site  4/ 5 | Selected Site:   1 | A_hat: 0.00056 | Coverage:  57.29%
+2024-09-29 21:15:11,257 - INFO - Selecting site  5/ 5 | Selected Site:  15 | A_hat: 0.00051 | Coverage:  66.88%
+2024-09-29 21:15:11,294 - INFO - Optimization process for Athens-Clarke County, GA Urban Area complete
+2024-09-29 21:15:11,436 - INFO - 
+====================================================================
+*** Processed Polygon Information ***
+--------------------------------------------------------------------
+Polygon ID            : Augusta-Richmond County, GA--SC Urban Area
+Total Supply          : 31.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 11.99%
+====================================================================
+2024-09-29 21:15:12,087 - INFO - Selecting site  2/ 7 | Selected Site: 260 | A_hat: 0.00140 | Coverage:  11.99%
+2024-09-29 21:15:12,828 - INFO - Selecting site  3/ 7 | Selected Site: 128 | A_hat: 0.00114 | Coverage:  24.52%
+2024-09-29 21:16:11,588 - INFO - 
+==================================================
+*** Processed Polygon Information ***
+--------------------------------------------------
+Polygon ID            : Albany, GA Urban Area
+Total Supply          : 11.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 25.39%
+==================================================
+2024-09-29 21:16:13,353 - INFO - Selecting site  2/ 2 | Selected Site:  16 | A_hat: 0.00083 | Coverage:  25.39%
+2024-09-29 21:16:13,369 - INFO - Optimization process for Albany, GA Urban Area complete
+2024-09-29 21:16:13,494 - INFO - 
+=============================================================
+*** Processed Polygon Information ***
+-------------------------------------------------------------
+Polygon ID            : Athens-Clarke County, GA Urban Area
+Total Supply          : 21.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 34.81%
+=============================================================
+2024-09-29 21:16:13,786 - INFO - Selecting site  2/ 5 | Selected Site: 177 | A_hat: 0.00080 | Coverage:  34.81%
+2024-09-29 21:16:14,088 - INFO - Selecting site  3/ 5 | Selected Site: 214 | A_hat: 0.00066 | Coverage:  44.50%
+2024-09-29 21:16:14,352 - INFO - Selecting site  4/ 5 | Selected Site:   1 | A_hat: 0.00056 | Coverage:  57.29%
+2024-09-29 21:16:14,656 - INFO - Selecting site  5/ 5 | Selected Site:  15 | A_hat: 0.00051 | Coverage:  66.88%
+2024-09-29 21:16:14,668 - INFO - Optimization process for Athens-Clarke County, GA Urban Area complete
+2024-09-29 21:16:14,816 - INFO - 
+====================================================================
+*** Processed Polygon Information ***
+--------------------------------------------------------------------
+Polygon ID            : Augusta-Richmond County, GA--SC Urban Area
+Total Supply          : 31.0
+A_bar Value           : 0.0006
+Selected Initial Sites: 1
+Initial Coverage      : 11.99%
+====================================================================
+2024-09-29 21:16:15,462 - INFO - Selecting site  2/ 7 | Selected Site: 260 | A_hat: 0.00140 | Coverage:  11.99%
+2024-09-29 21:16:16,196 - INFO - Selecting site  3/ 7 | Selected Site: 128 | A_hat: 0.00114 | Coverage:  24.52%
+2024-09-29 21:16:16,762 - INFO - Selecting site  4/ 7 | Selected Site:  63 | A_hat: 0.00098 | Coverage:  34.32%
+2024-09-29 21:16:17,442 - INFO - Selecting site  5/ 7 | Selected Site:  42 | A_hat: 0.00087 | Coverage:  40.37%
