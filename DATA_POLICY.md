@@ -5,10 +5,10 @@ and lightweight figures for the ACM SIGSPATIAL 2024 GIS Cup EV charging station
 optimization workflow.
 
 Large raw data, processed geospatial layers, intermediate optimization outputs,
-and notebook artifacts are intentionally not stored in git. A small curated set
-of final GeoPackage outputs is stored under `results/final/` for public review.
+and notebook artifacts are not bundled directly in this repository. A curated
+set of final GeoPackage outputs is available under `results/final/`.
 
-## Not Stored In Git
+## External Files
 
 The following files and directories should stay local or be distributed through an
 external archive:
@@ -20,11 +20,11 @@ external archive:
 - intermediate GeoPackage, Shapefile, GeoTIFF, GraphML, CSV, Excel, and SSV outputs
 - generated logs and Python cache files
 
-## Stored In Git
+## Included Results
 
 The repository keeps selected final EVCS result layers under `results/final/`.
-These files are intentionally small and are meant to document the final project
-outputs, not the full optimization trace.
+These files document the final project outputs without including the full
+optimization trace.
 
 ## Recommended Local Layout
 
@@ -58,10 +58,10 @@ then document the download URL and expected checksums here.
 
 ## Reproducibility Notes
 
-- Keep generated optimization outputs under `outputs/` or local `results/`
-  paths.
-- Do not commit raw geospatial data or intermediate result tables.
-- Commit only curated final outputs under `results/final/` when they are small,
-  documented, and safe to publish.
+- Generated optimization outputs can be written under `outputs/` or local
+  `results/` paths.
+- Raw geospatial data and intermediate result tables should be distributed
+  through an external archive when needed for reproduction.
+- Curated final outputs are kept under `results/final/`.
 - If a small sample dataset is needed, add it under `examples/` with clear
   provenance and size limits.

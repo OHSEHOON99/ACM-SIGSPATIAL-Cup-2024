@@ -26,8 +26,8 @@ in accessibility across demand points.
 - `DATA_POLICY.md`: data storage and sharing policy
 - `requirements.txt`: installable Python dependency list
 
-Large data, intermediate geospatial layers, optimization traces, and logs are
-not stored in git. See [DATA_POLICY.md](DATA_POLICY.md).
+Large input datasets and intermediate optimization traces are documented in
+[DATA_POLICY.md](DATA_POLICY.md) rather than bundled directly in the repository.
 
 ## Method Summary
 
@@ -60,7 +60,7 @@ conda install -c conda-forge geopandas rasterio pyogrio osmnx cvxpy
 
 ## Data Layout
 
-Place raw and processed data locally using this structure:
+For reproduction, place raw and processed data locally using this structure:
 
 ```text
 data/
@@ -75,8 +75,6 @@ outputs/
   logs/
 ```
 
-These paths are ignored by git.
-
 ## Curated Results
 
 Selected final GeoPackage outputs are provided under `results/final/`:
@@ -89,8 +87,8 @@ Selected final GeoPackage outputs are provided under `results/final/`:
 - `suburban_lv2.gpkg`: suburban Level 2 selected sites
 - `suburban_lv2_mclp_selected.gpkg`: suburban Level 2 MCLP-selected sites
 
-Intermediate optimization traces such as per-step `Ai_*.ssv` and `supply_*.ssv`
-files are intentionally not tracked.
+The full per-step optimization traces are omitted to keep the repository focused
+on code, documentation, and final project outputs.
 
 ## Notebooks
 
@@ -122,13 +120,3 @@ Preprocessing and post-processing notebooks are under:
   scenario outputs
 - `src/utils.py`: helper functions for logging, geospatial merging, POI counts,
   and visualization
-
-## Output Policy
-
-Generated files should be written to `outputs/` or `results/` locally. Do not
-commit generated `.gpkg`, `.tif`, `.csv`, `.xlsx`, `.ssv`, or log files unless
-they are deliberately curated as small examples with provenance.
-
-## License
-
-This project is licensed under the terms in [LICENSE](LICENSE).
