@@ -18,7 +18,9 @@ env/
 *.log
 outputs/
 output/
-results/
+results/*
+!results/final/
+!results/final/**
 tmp/
 temp/
 
@@ -48,3 +50,6 @@ post_processing/hazard_index/
 !figure/
 !figure/*.png
 !figure/*.jpg
+!results/final/
+!results/final/README.md
+!results/final/*.gpkg
