@@ -1,7 +1,6 @@
 import logging
 import os
-import geopandas as gpd
-import pandas as pd
+from pathlib import Path
 
 import geopandas as gpd
 import matplotlib.pyplot as plt
@@ -25,6 +24,9 @@ def merge_gpkg_files(output_path, output_file_name):
                     logging.error(f"Error reading {gpkg_file_path}: {str(e)}")
 
     # Merge all GeoDataFrames
+    if not gdf_list:
+        raise ValueError(f"No GPKG files found under {output_path}")
+
     merged_gdf = gpd.GeoDataFrame(pd.concat(gdf_list, ignore_index=True))
     merged_gpkg_path = os.path.join(output_path, output_file_name)
 
@@ -50,6 +52,8 @@ def process_ev_charging_data(initial_pois_path, candidate_pois_path, polygons_pa
     """
     Processes and visualizes the EV charging data for a given region based on the selected charger type (lv2 or dcfc) and region type.
     """
+    if charger_type not in {"lv2", "dcfc"}:
+        raise ValueError("charger_type must be either 'lv2' or 'dcfc'.")
     
     # Step 1: Load the data
     initial_pois_gdf = gpd.read_file(initial_pois_path)
@@ -115,23 +119,27 @@ def calculate_poi_counts_and_osm_ids(polygons_gdf, pois_gdf, count_column):
     Calculates the number of POIs within each polygon and stores the count in a new column.
     Additionally, creates a list of osm_ids for each polygon where applicable.
     """
-    # Perform spatial join
+    polygons_gdf = polygons_gdf.copy()
+    polygons_gdf[count_column] = 0
+    polygons_gdf['osm_id_list'] = None
+
+    if pois_gdf.empty:
+        print("Warning: No POIs were provided.")
+        return polygons_gdf
+
     pois_within_polygons = gpd.sjoin(pois_gdf[['osm_id', 'geometry']], polygons_gdf, how='left', predicate='within')
+    matched_pois = pois_within_polygons.dropna(subset=['index_right'])
 
     # Aggregate osm_id lists and calculate counts
-    if pois_within_polygons.shape[0] > 0:
-        # Calculate POI counts for each polygon and store in count_column
-        polygons_gdf[count_column] = pois_within_polygons.groupby('index_right').size()
+    if matched_pois.shape[0] > 0:
+        poi_counts = matched_pois.groupby('index_right').size()
+        osm_id_lists = matched_pois.groupby('index_right')['osm_id'].agg(lambda x: [str(osm_id) for osm_id in x])
 
-        # Create osm_id_list for each polygon, converting osm_id to string
-        polygons_gdf['osm_id_list'] = pois_within_polygons.groupby('index_right')['osm_id'].agg(lambda x: [str(osm_id) for osm_id in x])
-
-        # Convert empty lists to NaN or filter them out
-        polygons_gdf['osm_id_list'] = polygons_gdf['osm_id_list'].apply(lambda x: x if x and len(x) > 0 else None)
+        polygons_gdf[count_column] = polygons_gdf.index.map(poi_counts).fillna(0).astype(int)
+        polygons_gdf['osm_id_list'] = polygons_gdf.index.map(osm_id_lists)
+        polygons_gdf['osm_id_list'] = polygons_gdf['osm_id_list'].apply(lambda x: x if isinstance(x, list) and len(x) > 0 else None)
     else:
         print("Warning: No matching points were found within polygons.")
-        polygons_gdf[count_column] = 0
-        polygons_gdf['osm_id_list'] = None
 
     return polygons_gdf
 
@@ -149,6 +157,7 @@ def save_gpkg(gdf, path):
     """
     Saves a GeoDataFrame to a GeoPackage file.
     """
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
     gdf.to_file(path, driver='GPKG')
     print(f"Data saved to {path}")
 
@@ -186,6 +195,14 @@ def calculate_poi_counts(polygons_gdf, pois_gdf, count_column):
     """
     Calculates the number of POIs within each polygon and stores the count in a new column.
     """
-    pois_within_polygons = gpd.sjoin(polygons_gdf, pois_gdf, how='left', predicate='contains')
-    polygons_gdf[count_column] = pois_within_polygons.groupby(pois_within_polygons.index).size()
+    polygons_gdf = polygons_gdf.copy()
+    polygons_gdf[count_column] = 0
+
+    if pois_gdf.empty:
+        return polygons_gdf
+
+    pois_within_polygons = gpd.sjoin(pois_gdf[['geometry']], polygons_gdf[['geometry']], how='left', predicate='within')
+    matched_pois = pois_within_polygons.dropna(subset=['index_right'])
+    poi_counts = matched_pois.groupby('index_right').size()
+    polygons_gdf[count_column] = polygons_gdf.index.map(poi_counts).fillna(0).astype(int)
     return polygons_gdf

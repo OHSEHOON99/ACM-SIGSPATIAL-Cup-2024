@@ -49,6 +49,11 @@ def process_polygon(polygon, tif_file, poi_gdf, capture_range):
     candidate_sites_array = np.array([[point.x, point.y] for point in candidate_sites_within_polygon.geometry])
     candidate_sites_osm_ids = candidate_sites_within_polygon['osm_id'].tolist()
 
+    if demand_array.size == 0:
+        raise ValueError(f"No positive demand cells found for polygon {polygon_id}.")
+    if candidate_sites_array.size == 0:
+        return polygon_id, total_supply, 0, demand_values, np.empty((len(demand_array), 0)), [], initial_selected_sites
+
     # Compute the distance matrix between demand points and POI locations
     distance_matrix = cdist(demand_array, candidate_sites_array)
 

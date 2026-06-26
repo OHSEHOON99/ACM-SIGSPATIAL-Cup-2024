@@ -53,7 +53,17 @@ def log_optimization_step(n, max_sites, best_site, best_A_hat, coverage_ratio):
     logging.info(log_message)
 
 
-def greedy_optimization(polygon, tif_file, poi_gdf, capture_range, bandwidth, constraints, output_path, save_intermediate=False):
+def greedy_optimization(
+        polygon,
+        tif_file,
+        poi_gdf,
+        capture_range,
+        bandwidth,
+        constraints,
+        output_path,
+        save_intermediate=False,
+        n_jobs=None,
+):
     """
     Perform greedy optimization to select Electric Vehicle Charging Station (EVCS) locations and optimize supply distribution
     within a given region polygon.
@@ -80,10 +90,30 @@ def greedy_optimization(polygon, tif_file, poi_gdf, capture_range, bandwidth, co
     # Process the given polygon to extract relevant optimization data
     result = process_polygon(polygon, tif_file, poi_gdf, capture_range)
     polygon_id, total_supply, max_sites, demand_values, distance_matrix, candidate_sites, initial_selected_sites = result
+    polygon_id = str(polygon_id)
+    output_path = os.fspath(output_path)
+
+    if total_supply <= 0:
+        logging.warning("Skipping %s because total_supply is not positive.", polygon_id)
+        return
+
+    if len(candidate_sites) == 0:
+        logging.warning("Skipping %s because no candidate sites were found.", polygon_id)
+        return
+
+    max_sites = min(int(max_sites), len(candidate_sites))
+    if max_sites <= 0:
+        logging.warning("Skipping %s because max_sites is not positive.", polygon_id)
+        return
+
     optimizer = CapacityOptimizer(total_supply, demand_values, distance_matrix, bandwidth=bandwidth, capture_range=capture_range)
 
     # Select initial sites based on the initial POIs
-    selected_sites = [i for i, osm_id in enumerate(candidate_sites) if osm_id in initial_selected_sites]
+    if initial_selected_sites is None or not isinstance(initial_selected_sites, (list, tuple, set, np.ndarray, pd.Series)):
+        initial_selected_sites = []
+    initial_selected_sites = {str(osm_id) for osm_id in initial_selected_sites}
+    selected_sites = [i for i, osm_id in enumerate(candidate_sites) if str(osm_id) in initial_selected_sites]
+    selected_sites = selected_sites[:max_sites]
     initial_site_count = len(selected_sites)
 
     # Log processed polygon information
@@ -91,8 +121,9 @@ def greedy_optimization(polygon, tif_file, poi_gdf, capture_range, bandwidth, co
 
     # Initialize the supply array and assign initial supply to the selected sites
     poi_supply = np.zeros(len(candidate_sites))
-    initial_supply_value = total_supply / len(selected_sites)
-    poi_supply[selected_sites] = initial_supply_value
+    if selected_sites:
+        initial_supply_value = total_supply / len(selected_sites)
+        poi_supply[selected_sites] = initial_supply_value
 
     # Update the list of candidate sites (exclude already selected ones)
     remaining_candidate_sites = list(set(range(len(poi_supply))) - set(selected_sites))
@@ -106,6 +137,8 @@ def greedy_optimization(polygon, tif_file, poi_gdf, capture_range, bandwidth, co
         os.makedirs(supply_path, exist_ok=True)
         os.makedirs(ai_path, exist_ok=True)
 
+    worker_count = n_jobs if n_jobs is not None else max((os.cpu_count() or 1) - 1, 1)
+
     for n in range(initial_site_count + 1, max_sites + 1):
         best_site = None
         best_A_hat = np.inf
@@ -113,7 +146,7 @@ def greedy_optimization(polygon, tif_file, poi_gdf, capture_range, bandwidth, co
         best_Ai_optimized = None
 
         # Parallel optimization for candidate site selection
-        results = Parallel(n_jobs=os.cpu_count())(
+        results = Parallel(n_jobs=worker_count)(
             delayed(lambda site: (optimizer.optimize_capacity(selected_sites + [site], demand_values, constraints), site))(site)
             for site in remaining_candidate_sites
         )
@@ -129,11 +162,11 @@ def greedy_optimization(polygon, tif_file, poi_gdf, capture_range, bandwidth, co
                 all_infinite = False
 
         if all_infinite:
-            logging.warning(f"All A_hat values are infinite at step {n}. There's no any solutions for the optimal supply. Terminating early.")
+            logging.warning("All A_hat values are infinite at step %s. No feasible supply solution was found.", n)
             break
 
         # Calculate coverage after optimization
-        coverage_ratio = optimizer.calculate_coverage(selected_sites, distance_matrix, demand_values)
+        coverage_ratio = optimizer.calculate_coverage(selected_sites + [best_site], distance_matrix, demand_values)
 
         # Log the optimization result for this step
         log_optimization_step(n, max_sites, best_site, best_A_hat, coverage_ratio)
@@ -169,11 +202,11 @@ def greedy_optimization(polygon, tif_file, poi_gdf, capture_range, bandwidth, co
             np.savetxt(os.path.join(ai_path, f"Ai_{n}.ssv"), best_Ai_optimized, delimiter=" ")
 
     # Create the output directory for the polygon-specific results
-    polygon_output_path = os.path.join(output_path, str(polygon_id))
+    polygon_output_path = os.path.join(output_path, polygon_id)
     os.makedirs(polygon_output_path, exist_ok=True)
 
     # Save the final results as a CSV file
-    pd.DataFrame(results_list).to_csv(os.path.join(output_path, polygon_id, f"{polygon_id}.csv"), index=False)
+    pd.DataFrame(results_list).to_csv(os.path.join(polygon_output_path, f"{polygon_id}.csv"), index=False)
 
     # Create a DataFrame of selected POIs and their corresponding supply
     selected_poi_df = pd.DataFrame({
@@ -192,7 +225,7 @@ def greedy_optimization(polygon, tif_file, poi_gdf, capture_range, bandwidth, co
     # Reorder columns and save the result as a GeoPackage (GPKG) file
     gpd.GeoDataFrame(gdf_selected_poi[['osm_id', 'fclass', 'supply', 'geometry']], geometry='geometry')\
         .set_crs(epsg=3857)\
-        .to_file(os.path.join(output_path, polygon_id, f"{polygon_id}.gpkg"), layer=polygon_id, driver="GPKG")
+        .to_file(os.path.join(polygon_output_path, f"{polygon_id}.gpkg"), layer=polygon_id, driver="GPKG")
 
     # Log the completion of the optimization process
     logging.info(f"Optimization process for {polygon_id} complete")
