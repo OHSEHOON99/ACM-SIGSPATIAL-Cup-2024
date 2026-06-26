@@ -19,14 +19,15 @@ in accessibility across demand points.
 - `src/`: reusable Python modules for demand extraction, greedy selection, and
   capacity optimization
 - `notebooks/`: cleaned research notebooks kept as supplementary workflow notes
+- `results/final/`: curated final EVCS GeoPackage outputs
 - `poi_filtering.yaml`: POI class filters used for candidate and initial site
   selection
 - `figure/`: lightweight figures used in the README
 - `DATA_POLICY.md`: data storage and sharing policy
 - `requirements.txt`: installable Python dependency list
 
-Large data, intermediate geospatial layers, generated results, and logs are not
-stored in git. See [DATA_POLICY.md](DATA_POLICY.md).
+Large data, intermediate geospatial layers, optimization traces, and logs are
+not stored in git. See [DATA_POLICY.md](DATA_POLICY.md).
 
 ## Method Summary
 
@@ -75,6 +76,21 @@ outputs/
 ```
 
 These paths are ignored by git.
+
+## Curated Results
+
+Selected final GeoPackage outputs are provided under `results/final/`:
+
+- `dcfc_evcs.gpkg`: final DC fast charging station layer
+- `level2_evcs.gpkg`: final Level 2 charging station layer
+- `highway_dcfc.gpkg`: final highway DC fast charging station layer
+- `suburban_dcfc.gpkg`: suburban DC fast charging selected sites
+- `suburban_dcfc_mclp_selected.gpkg`: suburban DC fast charging MCLP-selected sites
+- `suburban_lv2.gpkg`: suburban Level 2 selected sites
+- `suburban_lv2_mclp_selected.gpkg`: suburban Level 2 MCLP-selected sites
+
+Intermediate optimization traces such as per-step `Ai_*.ssv` and `supply_*.ssv`
+files are intentionally not tracked.
 
 ## Notebooks
 
