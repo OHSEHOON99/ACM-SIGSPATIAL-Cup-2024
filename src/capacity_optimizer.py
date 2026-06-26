@@ -46,7 +46,11 @@ class CapacityOptimizer:
         - capture_range (float): Maximum range for coverage.
         """
         self.total_supply = total_supply
+        if self.total_supply <= 0:
+            raise ValueError("Total supply must be positive.")
         self.total_demand = np.sum(demand)
+        if self.total_demand <= 0:
+            raise ValueError("Total demand must be positive.")
         self.A_bar_value = self.total_supply / self.total_demand  # Average supply per unit of demand
         self.F = gaussian_decay(distance_matrix, bandwidth, capture_range)
         self.D = np.diag(demand)
@@ -68,7 +72,10 @@ class CapacityOptimizer:
         """
         try:
             F_current = self.F[:, current_sites]
-            G_diag = 1.0 / np.sum(demand[:, np.newaxis] * F_current, axis=0)
+            denominators = np.sum(demand[:, np.newaxis] * F_current, axis=0)
+            if np.any(denominators <= 0):
+                raise ValueError("Selected sites include zero-demand catchments.")
+            G_diag = 1.0 / denominators
             A_bar = np.full(F_current.shape[0], self.A_bar_value)
             P = F_current @ np.diag(G_diag)
 
@@ -109,6 +116,8 @@ class CapacityOptimizer:
             # Solve the QP problem
             prob = cp.Problem(objective, constraint_list)
             prob.solve(solver=cp.OSQP)
+            if prob.status not in {cp.OPTIMAL, cp.OPTIMAL_INACCURATE} or x.value is None:
+                raise ValueError(f"QP solver did not return a valid solution: {prob.status}")
 
             optimized_supply = x.value
             Ai_optimized = P @ optimized_supply
@@ -146,6 +155,9 @@ class CapacityOptimizer:
         
         sorted_Ai_Di = sorted_Ai * sorted_Di
         sum_Ai_Di = np.sum(sorted_Ai_Di)
+        if sum_Ai_Di <= 0:
+            Gini = 0.0
+            return A_hat, min_Ai, max_Ai, MD, MAD, CV, Gini
         
         P = np.cumsum(sorted_Di) / self.total_demand
         T = np.cumsum(sorted_Ai_Di) / sum_Ai_Di

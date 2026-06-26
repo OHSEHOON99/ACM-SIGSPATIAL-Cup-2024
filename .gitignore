@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments
+.env
+.venv/
+venv/
+env/
+*.egg-info/
+
+# Logs and local run artifacts
+*.log
+outputs/
+output/
+results/
+tmp/
+temp/
+
+# Large local geospatial/data inputs
+data/
+post_processing/hazard_index/
+*.gpkg
+*.tif
+*.tiff
+*.nc
+*.csv
+*.xlsx
+*.xls
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.graphml
+*.ssv
+
+# Keep documentation and lightweight config files tracked.
+!README.md
+!DATA_POLICY.md
+!requirements.txt
+!poi_filtering.yaml
+!figure/
+!figure/*.png
+!figure/*.jpg
